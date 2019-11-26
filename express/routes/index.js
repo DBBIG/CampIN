@@ -47,7 +47,7 @@ router.get('/search/address', (req, res) => {
         }
         else
           console.log('Error while performing Query.', err);
-   });
+    });
 });
 
 router.get('/search/rank', (req, res) => {
@@ -58,7 +58,7 @@ router.get('/search/rank', (req, res) => {
       res.render('index', {keyword:req.query.rank, result:rows, title: 'CampIN'});}
     else
       console.log('Error while performing Query.', err);
-   });
+    });
 });
 
 router.get('/reservation', (req, res) => {
