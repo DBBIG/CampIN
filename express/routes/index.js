@@ -79,7 +79,7 @@ router.get('/search/detail', (req, res) => {
                         }
                     );
             } else 
-                console.log('Error while performing Query.', err);
+                console.log('Error while performing Query. ', err);
             }
         );
 
