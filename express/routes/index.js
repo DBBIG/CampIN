@@ -54,7 +54,7 @@ router.get('/search/detail', (req, res)=>{
               data.gradeResult = rows2
               
               connection.query(
-      'select type, name from FacilityDefine natural join(CampSiteFacility) where cp_id = ?'
+      'select type, name from FacilityDefine natural join(CampSiteFacility) where cp_id = ? order by type'
       ,[cp_id]
       , function(err, rows3, fields) {
         if (!err){
@@ -187,5 +187,8 @@ router.delete('/reservation', (req, res)=>{
   });
 })
 
+router.get('/search/state', (req, res)=>{
+  res.render('search/state', {cr_id:req.query.cp_id});
+})
 
 module.exports = router;
