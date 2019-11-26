@@ -76,7 +76,8 @@ router.get('/search/available', (req, res) => {
       res.render('index', {keyword:rows, title: 'CampIN'});}
     else
       console.log('Error while performing Query.', err);
-   });
+  });
+}
 
 router.get('/reservation', (req, res) => {
     res.render('reservation', { title: 'CampIN' });
