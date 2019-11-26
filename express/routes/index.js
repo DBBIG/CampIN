@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var request = require('request');
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -22,12 +21,12 @@ router.get('/', function(req, res, next) {
 
 router.get('/search/name', function(req, res, next){
   connection.query(
-    'SELECT name, address from CampingSite where name like ?'
+    'SELECT name, address, cp_id from CampingSite where name like ?'
     , ["%"+req.query.name+"%"]
     , function(err, rows, fields) {
     if (!err){
       console.log(rows);
-      res.render('index', {keyword:req.query.name, result:rows, title: 'CampIN'});}
+      res.render('search/name', {keyword:req.query.name, result:rows, title: 'CampIN'});}
 
     else
       console.log('Error while performing Query.', err);
@@ -40,13 +39,13 @@ router.get('/search', (req, res) => {
 
 router.get('/search/address', (req, res) => {
     connection.query(
-      'SELECT name, address from CampingSite where address like ?'
+      'SELECT name, address, cp_id from CampingSite where address like ?'
       ,["%"+req.query.address+"%"]
       , function(err, rows, fields) {
         if (!err){
 
           console.log(rows);
-          res.render('index', {keyword:req.query.address, result:rows, title: 'CampIN'});
+          res.render('search/address', {keyword:req.query.address, result:rows, title: 'CampIN'});
         }
         else
           console.log('Error while performing Query.', err);
@@ -54,13 +53,13 @@ router.get('/search/address', (req, res) => {
 });
 
 router.get('/search/rank', (req, res) => {
-  connection.query('SELECT name, address from CampingSite where cp_id in (select cp_id from CampingSiteGrade where grade = ?)',
+  connection.query('SELECT name, address, cp_id from CampingSite where cp_id in (select cp_id from CampingSiteGrade where grade = ?)',
   ["%"+req.query.rank+"%"], function(err, rows, fields) {
     if (!err){
 
       console.log(rows);
 
-      res.render('index', {keyword:req.query.rank, result:rows, title: 'CampIN'});}
+      res.render('search/rank', {keyword:req.query.rank, result:rows, title: 'CampIN'});}
 
     else
       console.log('Error while performing Query.', err);
@@ -77,7 +76,7 @@ router.get('/search/available', (req, res) => {
     else
       console.log('Error while performing Query.', err);
   });
-}
+});
 
 router.get('/reservation', (req, res) => {
     res.render('reservation', { title: 'CampIN' });
@@ -151,6 +150,4 @@ router.delete('/reservation', (req, res)=>{
 })
 
 
-router.get('/api', (req, res)=>{
-})
 module.exports = router;
