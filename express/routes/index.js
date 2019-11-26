@@ -60,7 +60,7 @@ router.get('/search/detail', (req, res)=>{
         if (!err){
           data.faci= rows3
           console.log(rows3);
-          res.render('search/detail', {result: data.result, gradeResult : data.gradeResult, facilityResult: data.faci});
+          res.render('search/detail', {result: data.result, gradeResult : data.gradeResult, facilityResult: data.faci, user_id:req.query.user_id, cp_id:cp_id, date: req.query.date});
         }
         else
           console.log('Error while performing Query.', err);
@@ -188,7 +188,20 @@ router.delete('/reservation', (req, res)=>{
 })
 
 router.get('/search/state', (req, res)=>{
-  res.render('search/state', {cr_id:req.query.cp_id});
+  console.log(req.query.cp_id);
+  res.render('search/state', {cp_id : req.query.cp_id});
 })
 
+router.post('/reservation/new', (req, res)=>{
+  var {cp_id, user_id, grade, date} = req.body;
+  connection.query('insert into reservation(cp_id, user_id, grade, date) values (?,?,?,?)',
+  [cp_id, user_id, grade, date],
+  function(err, rows, fields){
+    if(!err){
+      console.log(rows);
+      res.render('index', {result: rows, title: 'CampIN'})
+    }
+    else console.log('Error while performing Query.', err);
+  });
+})
 module.exports = router;
