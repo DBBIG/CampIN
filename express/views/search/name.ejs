@@ -16,7 +16,7 @@
                 <td><%= result[i].name %></td>
                 <td><%= result[i].address %></td>
                 <td>
-                    <form action="/search/detail" method="get">
+                    <form action="/search/state" method="get">
                         <input type="hidden" value=<%= result[i].cp_id %> name="cp_id">
                         <input type="submit" value="GO">
                     </form>
