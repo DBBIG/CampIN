@@ -149,7 +149,18 @@ router.get('/search/facility/type', (req, res)=>{
       console.log('Error while performing Query.', err);
   });
 })
-
+router.post('/signup', (req, res)=>{
+  console.log(req.body);
+  connection.query('insert into user (phone, name) values (?,?)',
+  [req.body.phone, req.body.name],
+  function(err, rows, fields){
+    if(!err){
+      console.log(rows);
+      res.render('signUped', {user_id : rows.insertId})
+    }
+    else console.log('Error while performing Query.', err);
+  });
+})
 router.post('/reservation', (req, res) => {
   res.render('reservation', {title:"ss"});
 })
@@ -169,13 +180,13 @@ router.get('/reservation/check', (req, res)=>{
   });
 })
 
-router.delete('/reservation', (req, res)=>{
+router.get('/reservation/canceled', (req, res)=>{
   connection.query('delete from reservation where r_id = ?',
   [req.query.r_id],
   function(err, rows, fields){
     if(!err){
       console.log(rows);
-      res.render('index', {result: rows, title: 'CampIN'})
+      res.render('reservation/canceled', {r_id:req.query.r_id});
     }
     else console.log('Error while performing Query.', err);
   });

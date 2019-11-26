@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>DBBIG</title>
+        <title>DBbig</title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
-        <h1>'예악 취소 확인</h1>
+        <h1>예약 취소 확인</h1>
         <a href="/">처음으로</a><br><br>
 
         <a>정말로 취소합니까?</a>
-        <form action="/reservation/cancel" method="post">
+        <form action="/reservation/canceled" method="get">
             <input type="hidden" value=<%= r_id %> name="r_id">
             <input type="submit" value="GO">
         </form>
