@@ -61,15 +61,7 @@ router.get('/search/detail', (req, res) => {
                                     if (!err) {
                                         data.faci = rows3
                                         console.log(rows3);
-                                        connection.query(
-                                            'select count(*) from Reservation where cp_id = ? and date = ? and grade = ?',
-                                            [
-                                                cp_id, req.query.date
-                                            ],
-                                            function (err, rows, fields) {
-                                                if (!err) {
-
-                                                    res.render('search/detail', {
+                                        res.render('search/detail', {
                                                         result: data.result,
                                                         gradeResult: data.gradeResult,
                                                         facilityResult: data.faci,
@@ -77,10 +69,6 @@ router.get('/search/detail', (req, res) => {
                                                         cp_id: cp_id,
                                                         date: req.query.date
                                                     });
-                                                } else 
-                                                    console.log('Error while performing Query.', err);
-                                                }
-                                            );
 
                                     } else 
                                         console.log('Error while performing Query.', err);
@@ -119,7 +107,7 @@ router.get('/search/rank', (req, res) => {
     connection.query(
         'SELECT name, address, cp_id from CampingSite where cp_id in (select cp_id from' +
                 ' CampingSiteGrade where grade = ?)',
-        ["%" + req.query.rank + "%"],
+        [req.query.rank],
         function (err, rows, fields) {
             if (!err) {
 

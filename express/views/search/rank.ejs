@@ -13,8 +13,8 @@
             <th>자세히 보기</th>
         <% for(let i = 0; i < result.length; i++){%>
             <tr>
-                <td><% result[i].name %></td>
-                <td><% result[i].address %></td>
+                <td><%= result[i].name %></td>
+                <td><%= result[i].address %></td>
                 <td>
                     <form action="/search/state" method="get">
                         <input type="hidden" value=<%= result[i].cp_id %> name="cp_id">
