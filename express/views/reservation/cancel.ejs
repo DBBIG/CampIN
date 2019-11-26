@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <h1>'예악 취소 확인</h1>
+        <a href="../">이전</a>
+        <a href="/">처음으로</a><br><br>
+
+        <a>정말로 취소합니까?</a>
+        <form action="/reservation/cancel" method="post">
+            <input type="hidden" value=<%= result[i].r_id %> name="r_id">
+            <input type="submit" value="GO">
+        </form>
+    </body>
+</html>
