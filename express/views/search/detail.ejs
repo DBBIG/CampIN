@@ -6,11 +6,11 @@
     </head>
     <body>
         <h1>'<%= result[0].name %>' 상세 정보 보기</h1>
-        연락처 : result[0].phone
-        주소 : result[0].address
-        주차장 보유 여부 : result[0].parking_lot
-        이용 횟수 : result[0].used_time
-        평점 : result[0].rating
+        연락처 : <%= result[0].phone %>
+        주소 : <%= result[0].address%>
+        주차장 보유 여부 :<%= result[0].parking_lot%>
+        이용 횟수 : <%=result[0].used_time%>
+        평점 : <%=result[0].rating%>
 
         등급별 잔여석
         <table>
@@ -21,11 +21,11 @@
             <th>예약하기</th>
             <% for(let i = 0; i < result.length; i++){ %>
                 <tr>
-                    <td><%= result[i].grade %></td>
-                    <td><%= result[i].price %></td>
-                    <td><%= result[i].total_sites %></td>
-                    <td><%= result[i].available_sites %></td>
-                    <td><a href='./'+<%= result[i].cp_id >> GO </a>
+                    <td><%= gradeResult[i].grade %></td>
+                    <td><%= gradeResult[i].price %></td>
+                    <td><%= gradeResult[i].total_sites %></td>
+                    <td><%= gradeResult[i].available_sites %></td>
+
                 </tr>
             <% }%>
         </table>

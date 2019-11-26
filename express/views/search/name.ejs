@@ -14,7 +14,12 @@
             <tr>
                 <td><%= result[i].name %></td>
                 <td><%= result[i].address %></td>
-                <td><a href='/detail'+<%= result[i].cp_id %>> GO </a>
+                <td>
+                    <form action="/search/detail" method="get">
+                        <input type="hidden" value=<%= result[i].cp_id %> name="cp_id">
+                        <input type="submit" value="go">
+                    </form>
+                </td>
             </tr>
         <%}%>
         

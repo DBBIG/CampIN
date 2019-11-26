@@ -37,6 +37,33 @@ router.get('/search', (req, res) => {
     res.render('search', { title: 'CampIN' });
 });
 
+router.get('/search/detail', (req, res)=>{
+  var cp_id = req.query.cp_id;
+  data = {};
+  connection.query(
+      'select * from CampingSite where cp_id = ?'
+      ,[cp_id]
+      , function(err, rows, fields) {
+        if (!err){
+          data.result = rows;
+          connection.query(
+            'select * from CampingSiteGrade where cp_id = ?'
+            ,[cp_id]
+            , function(err, rows2, fields) {
+            if (!err){
+              data.gradeResult = rows2
+              console.log(data);
+              res.render('search/detail', {result: data.result, gradeResult : data.gradeResult, title:"what"});
+            }
+            else
+              console.log('Error while performing Query.', err);
+          });
+        }
+        else
+          console.log('Error while performing Query.', err);
+    });
+
+})
 router.get('/search/address', (req, res) => {
     connection.query(
       'SELECT name, address, cp_id from CampingSite where address like ?'
