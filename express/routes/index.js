@@ -52,8 +52,19 @@ router.get('/search/detail', (req, res)=>{
             , function(err, rows2, fields) {
             if (!err){
               data.gradeResult = rows2
-              console.log(data);
-              res.render('search/detail', {result: data.result, gradeResult : data.gradeResult, title:"what"});
+              
+              connection.query(
+      'select type, name from FacilityDefine natural join(CampSiteFacility) where cp_id = ?'
+      ,[cp_id]
+      , function(err, rows3, fields) {
+        if (!err){
+          data.faci= rows3
+          console.log(rows3);
+          res.render('search/detail', {result: data.result, gradeResult : data.gradeResult, facilityResult: data.faci});
+        }
+        else
+          console.log('Error while performing Query.', err);
+    });
             }
             else
               console.log('Error while performing Query.', err);

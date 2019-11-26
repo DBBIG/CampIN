@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><%= title %></title>
+        <title>DBBIG</title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
         <h1>'<%= result[0].name %>' 상세 정보 보기</h1>
+        <a href="./">이전</a>
+        <a href="/">처음으로</a><br><br>
         연락처 : <%= result[0].phone %>
-        주소 : <%= result[0].address%>
-        주차장 보유 여부 :<%= result[0].parking_lot%>
-        이용 횟수 : <%=result[0].used_time%>
-        평점 : <%=result[0].rating%>
+        주소 : <%= result[0].address %>
+        주차장 보유 여부 : <%= result[0].parking_lot %>
+        이용 횟수 : <%= result[0].used_time %>
+        평점 : <%= result[0].rating %>
 
         등급별 잔여석
         <table>
@@ -19,13 +21,18 @@
             <th>전체석</th>
             <th>여석</th>
             <th>예약하기</th>
-            <% for(let i = 0; i < result.length; i++){ %>
+            <% for(let i = 0; i < gradeResult.length; i++){ %>
                 <tr>
                     <td><%= gradeResult[i].grade %></td>
                     <td><%= gradeResult[i].price %></td>
                     <td><%= gradeResult[i].total_sites %></td>
                     <td><%= gradeResult[i].available_sites %></td>
-
+                    <td>
+                        <form action="/reservation/new" method="post">
+                            <input type="hidden" value=<%= gradeResult[i].cp_id %> name="cp_id">
+                            <input type="submit" value="GO">
+                        </form>
+                    </td>
                 </tr>
             <% }%>
         </table>
@@ -34,16 +41,12 @@
         <table>
             <th>시설명</th>
             <th>분류</th>
-            <% for(let i = 0; i < result.length; i++){ %>
+            <% for(let i = 0; i < facilityResult.length; i++){ %>
                 <tr>
-                    <td><%= result[i].name %></td>
-                    <td><%= result[i].type %></td>
+                    <td><%= facilityResult[i].name %></td>
+                    <td><%= facilityResult[i].type %></td>
                 </tr>
             <% }%>
         </table>
     </body>
-    <footer>
-        <br><br><a href="../">이전</a>
-        <a href="/">처음으로</a>
-    </footer>
 </html>
