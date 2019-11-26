@@ -151,25 +151,19 @@ router.get('/search/facility/type', (req, res)=>{
 })
 
 router.post('/reservation', (req, res) => {
-  var {r_id, cp_id, user_id, grade, date} = req.body;
-  connection.query('INSERT INTO Reservation(r_id, cp_id, user_id, grade, date) VALUES (?, ?, ?, ?, ?)',
-  [r_id, cp_id, user_id, grade, date],
-  function(err, rows, fields){
-    if(!err){
-      console.log(rows);
-      res.render('index', {result: rows, title: 'CampIN'})
-    }
-    else console.log('Error while performing Query.', err);
-  });
+  res.render('reservation', {title:"ss"});
 })
 
+router.get('/reservation/cancel', (req, res)=>{
+  res.render('reservation/cancel', {r_id:req.query.r_id});
+})
 router.get('/reservation/check', (req, res)=>{
-  connection.query('select * from Reservation where user_id = ?',
+  connection.query('select * from Reservation natural join(CampingSite) where user_id = ?',
   [req.query.user_id],
   function(err, rows, fields){
     if(!err){
       console.log(rows);
-      res.render('index', {result: rows, title: 'CampIN'})
+      res.render('reservation/check', {user_id:req.query.user_id, result: rows, title: 'CampIN'})
     }
     else console.log('Error while performing Query.', err);
   });
@@ -193,13 +187,14 @@ router.get('/search/state', (req, res)=>{
 })
 
 router.post('/reservation/new', (req, res)=>{
-  var {cp_id, user_id, grade, date} = req.body;
+  console.log(req.body);
+  var {cp_id, user_id, date, grade} = req.body;
   connection.query('insert into reservation(cp_id, user_id, grade, date) values (?,?,?,?)',
   [cp_id, user_id, grade, date],
   function(err, rows, fields){
     if(!err){
       console.log(rows);
-      res.render('index', {result: rows, title: 'CampIN'})
+      res.render('reservation/new', {title: 'CampIN'})
     }
     else console.log('Error while performing Query.', err);
   });
