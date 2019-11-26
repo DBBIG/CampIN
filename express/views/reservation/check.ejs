@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title><%= title %></title>
+        <title>DBbig</title>
         <link rel='stylesheet' href='/stylesheets/style.css' />
     </head>
     <body>
@@ -14,11 +14,11 @@
             <th>취소하기</th>
         <% for(let i = 0; i < result.length; i++){%>
             <tr>
-                <td><%= result[i].cp_name %></td>
+                <td><%= result[i].name %></td>
                 <td><%= result[i].grade %></td>
                 <td><%= result[i].date %></td>
                 <td>
-                    <form action="/reservation/cancel" method="post">
+                    <form action="/reservation/cancel" method="get">
                         <input type="hidden" value=<%= result[i].r_id %> name="r_id">
                         <input type="submit" value="GO">
                     </form>
