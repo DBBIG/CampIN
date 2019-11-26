@@ -16,7 +16,7 @@ connection.connect(()=>{
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'CampIN' });
 });
 
 router.get('/search/name', function(req, res, next){
@@ -26,11 +26,15 @@ router.get('/search/name', function(req, res, next){
     , function(err, rows, fields) {
     if (!err){
       console.log('The solution is: ', rows);
-      res.render('index', {keyword:rows, title: 'CampIN'});}
+      res.render('index', {keyword:req.query.name, result:rows, title: 'CampIN'});}
     else
       console.log('Error while performing Query.', err);
   });
 })
+
+router.get('/search', (req, res) => {
+    res.render('search', { title: 'CampIN' });
+});
 
 router.get('/search/address', (req, res) => {
     connection.query(
@@ -39,7 +43,7 @@ router.get('/search/address', (req, res) => {
       , function(err, rows, fields) {
         if (!err){
           console.log('The solution is: ', rows);
-          res.render('index', {keyword:rows, title: 'CampIN'});
+          res.render('index', {keyword:req.query.address, result:rows, title: 'CampIN'});
         }
         else
           console.log('Error while performing Query.', err);
@@ -51,14 +55,18 @@ router.get('/search/rank', (req, res) => {
   ["%"+req.query.rank+"%"], function(err, rows, fields) {
     if (!err){
       console.log('The solution is: ', rows);
-      res.render('index', {keyword:rows, title: 'CampIN'});}
+      res.render('index', {keyword:req.query.rank, result:rows, title: 'CampIN'});}
     else
       console.log('Error while performing Query.', err);
    });
 });
 
 router.get('/reservation', (req, res) => {
-    res.render('reservation/reservation', { title: 'CampIN' });
+    res.render('reservation', { title: 'CampIN' });
+});
+
+router.get('/signup', (req, res) => {
+    res.render('signUp', { title: 'CampIN' });
 });
 
 module.exports = router;
