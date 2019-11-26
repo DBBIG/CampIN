@@ -6,12 +6,20 @@
     </head>
     <body>
         <h1>'<%= keyword %>' 주소 검색 결과</h1>
-        <%= for(let i = 0; i < result.length; i++){%>
-            <ul>
-                안뇽
-            </ul>
+        <table border = '3'>
+            <th>캠핑장 이름</th>
+            <th>주소</th>
+            <th>자세히 보기</th>
+        <% for(let i = 0; i < result.length; i++){%>
+            <tr>
+                <td><%= result[i].name %></td>
+                <td><%= result[i].address %></td>
+                <td><a href='./'+<%= result[i].cp_id %>> GO </a>
+            </tr>
         <%}%>
-        <br><br><a href="../">이전</a>
-        <a href="/">처음으로</a>
+        
     </body>
+    <footer><a href="../">이전</a>
+        <a href="/">처음으로</a><br><br><br></footer>
+    
 </html>
