@@ -71,12 +71,10 @@ router.get('/search/detail', (req, res) => {
                                                 if (!err) {
                                                     console.log(rows4);
                                                     for (var i = 0; i < data.gradeResult.length; i++) {
+                                                        data.gradeResult[i].available_sites = data.gradeResult[i].total_sites;
                                                         for (var j = 0; j < rows4.length; j++) {
                                                             if (rows4[j].grade == data.gradeResult[i].grade) {
-                                                                data
-                                                                    .gradeResult[i]
-                                                                    .available_sites -= rows4[j]
-                                                                    .count;
+                                                                data.gradeResult[i].available_sites -= rows4[j].count
                                                             }
                                                         }
                                                     }
@@ -291,7 +289,7 @@ router.post('/reservation/new', (req, res) => {
                             console.log('Error while performing Query.', err);
                         }
                     );
-                
+
             } else 
                 console.log('Error while performing Query.', err);
             }
