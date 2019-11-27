@@ -51,6 +51,7 @@ router.get('/search/detail', (req, res) => {
                     [cp_id],
                     function (err, rows2, fields) {
                         if (!err) {
+                            console.log(rows2);
                             data.gradeResult = rows2
 
                             connection.query(
@@ -60,8 +61,26 @@ router.get('/search/detail', (req, res) => {
                                 function (err, rows3, fields) {
                                     if (!err) {
                                         data.faci = rows3
-                                        console.log(rows3);
-                                        res.render('search/detail', {
+                                        connection.query(
+                                            'select grade, count(*) as count from reservation where cp_id = ? and date = ? ' +
+                                                    'group by grade',
+                                            [
+                                                cp_id, req.query.date
+                                            ],
+                                            function (err, rows4, fields) {
+                                                if (!err) {
+                                                    console.log(rows4);
+                                                    for (var i = 0; i < data.gradeResult.length; i++) {
+                                                        for (var j = 0; j < rows4.length; j++) {
+                                                            if (rows4[j].grade == data.gradeResult[i].grade) {
+                                                                data
+                                                                    .gradeResult[i]
+                                                                    .available_sites -= rows4[j]
+                                                                    .count;
+                                                            }
+                                                        }
+                                                    }
+                                                    res.render('search/detail', {
                                                         result: data.result,
                                                         gradeResult: data.gradeResult,
                                                         facilityResult: data.faci,
@@ -69,6 +88,10 @@ router.get('/search/detail', (req, res) => {
                                                         cp_id: cp_id,
                                                         date: req.query.date
                                                     });
+                                                } else 
+                                                    console.log('Error while performing Query.', err);
+                                                }
+                                            );
 
                                     } else 
                                         console.log('Error while performing Query.', err);
@@ -248,15 +271,27 @@ router.post('/reservation/new', (req, res) => {
         date,
         grade
     } = req.body;
+
     connection.query(
-        'insert into reservation(cp_id, user_id, grade, date) values (?,?,?,?)',
+        'insert into reservation (cp_id, user_id, grade, date) values (?,?,?,?)',
         [
             cp_id, user_id, grade, date
         ],
         function (err, rows, fields) {
             if (!err) {
                 console.log(rows);
-                res.render('reservation/new', {title: 'CampIN'})
+                connection.query(
+                    'update campingSite set used_time = used_time +1 where cp_id = ?',
+                    [cp_id],
+                    function (err, rows, fields) {
+                        if (!err) {
+                            console.log(rows);
+                            res.render('reservation/new', {title: 'CampIN'})
+                        } else 
+                            console.log('Error while performing Query.', err);
+                        }
+                    );
+                
             } else 
                 console.log('Error while performing Query.', err);
             }
